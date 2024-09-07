@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camisas BLACKPINK</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+    <style>
+        /* Estilos generales del cuerpo */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            background-image: url('/BLKPNK-0043_EvergreenStoreRefreshHero-Banner_mobile5540.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            transition: background-image 0.5s ease-in-out; /* Transición para el cambio de fondo */
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            background-color: #ff007f;
+            padding: 5px; /* Reducido el padding para hacer el encabezado más pequeño */
+            text-align: center;
+            z-index: 1000;
+            animation: colorChange 3s ease-in-out infinite;
+            display: flex; /* Usado para alinear el logo y el texto en fila */
+            align-items: center; /* Alinea verticalmente el logo y el texto */
+            justify-content: center; /* Centra el contenido del encabezado */
+        }
+
+        @keyframes colorChange {
+            0% { background-color: #ff007f; }
+            50% { background-color: #000000; }
+            100% { background-color: #ff007f; }
+        }
+
+        .header-title {
+            font-size: 20px; /* Reducido el tamaño del texto del título */
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .header-logo {
+            height: 80px; /* Ajusta el tamaño del logo */
+            width: auto; /* Mantiene la proporción del logo */
+            vertical-align: middle; /* Alinea el logo verticalmente con el texto */
+            margin-right: 10px; /* Espacio entre el logo y el texto */
+            display: inline-block; /* Alinea el logo y el texto en línea */
+        }
+
+        .shipping-info {
+            text-align: center;
+            margin: 10px 0; /* Reducido el margen para ajustar el tamaño del encabezado */
+            font-size: 14px; /* Reducido el tamaño de la fuente */
+            color: #ff007f;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .catalog-container {
+            padding: 20px;
+        }
+
+        .product {
+            text-align: center;
+        }
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .carousel-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            width: 100%;
+        }
+
+        .carousel-wrapper img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1;
+            font-size: 18px;
+            border-radius: 3px;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        .product-title {
+            font-size: 20px;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            background-color: #000;
+            padding: 10px;
+            display: block;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .buy-button {
+            display: block;
+            background-color: #ff078f;
+            color: #fff;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .buy-button:hover {
+            background-color: #c7006a;
+        }
+
+        .product-description-wrapper {
+            background-color: #000;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .product-description {
+            font-size: 16px;
+            color: #fff;
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .price {
+            display: block;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+
+        .price .original-price {
+            text-decoration: line-through;
+            color: #fff;
+            font-weight: normal;
+        }
+
+        .price .discounted-price {
+            font-weight: bold;
+            color: #fffeff;
+        }
+
+        /* Estilo para el logo */
+        .logo {
+            position: fixed;
+            bottom: 10px; /* Ajusta el espacio desde la parte inferior */
+            right: 10px; /* Cambiado para ajustar el espacio desde el lado derecho */
+            width: 50px; /* Ajusta el tamaño del logo */
+            height: auto; /* Mantiene la proporción del logo */
+            z-index: 1000; /* Asegura que el logo esté sobre otros elementos */
+        }
+
+        /* Estilos para el lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .lightbox.fade-out {
+            animation: fadeOut 0.5s ease-in-out;
+        }
+
+        .lightbox-content {
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .lightbox-content img {
+            max-width: 90%;
+            max-height: 80%;
+            border-radius: 8px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ff007f;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            z-index: 1002;
+        }
+
+        .close-btn:hover {
+            background-color: #c7006a;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="LOGO PRETTY.png" alt="Logo" class="header-logo">
+        <div class="header-title">PRETTY PUNK</div>
+    </header>
+
+    <!-- Logo -->
+    <img src="LOGO PRETTY.png" alt="Logo" class="logo">
+
+    <div class="container">
+        <div class="catalog-container">
+            <div class="product">
+                <div class="carousel">
+                    <div class="carousel-wrapper">
+                        <img src="GRUPAL.jpeg" alt="Camisa BLACKPINK 1 - Imagen 1">
+                        <img src="ssstik.io_1725589102461.jpeg" alt="Camisa BLACKPINK 1 - Imagen 2">
+                        <img src="ssstik.io_1725589108982.jpeg" alt="Camisa BLACKPINK 1 - Imagen 3">
+                        <img src="ssstik.io_1725589104103.jpeg" alt="Camisa BLACKPINK 1 - Imagen 4">
+                        <img src="ssstik.io_1725589106274.jpeg" alt="Camisa BLACKPINK 1 - Imagen 5">
+                    </div>
+                    <button class="carousel-button prev">&#10094;</button>
+                    <button class="carousel-button next">&#10095;</button>
+                </div>
+                <div class="product-title">4 CAMISETAS PINK L</div>
+                <a class="buy-button" href="pay.html">
+                    Comprar 
+                    <span class="price">
+                        <span class="original-price">$46 USD</span> 
+                        <span class="discounted-price">$4 USD</span>
+                    </span>
+                </a>
+                <div class="product-description-wrapper">
+                    <div class="product-description">Talla L / Algodon 100%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="close-btn" id="close-btn">&times;</button>
+            <img src="UFSAA.jpg" alt="Aviso Importante"> <!-- Cambia el nombre del archivo a tu imagen de aviso -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.carousel-wrapper img');
+            const totalSlides = slides.length;
+            let currentIndex = 0;
+
+            function moveSlide(step) {
+                const slideWidth = slides[0].clientWidth;
+                currentIndex = (currentIndex + step + totalSlides) % totalSlides;
+                const offset = -currentIndex * slideWidth;
+                document.querySelector('.carousel-wrapper').style.transform = `translateX(${offset}px)`;
+            }
+
+            document.querySelector('.prev').addEventListener('click', () => moveSlide(-1));
+            document.querySelector('.next').addEventListener('click', () => moveSlide(1));
+
+            // Mostrar lightbox al cargar la página
+            const lightbox = document.getElementById('lightbox');
+            const closeBtn = document.getElementById('close-btn');
+
+            lightbox.style.display = 'flex';
+
+            closeBtn.addEventListener('click', () => {
+                lightbox.classList.add('fade-out');
+                setTimeout(() => {
+                    lightbox.style.display = 'none';
+                    lightbox.classList.remove('fade-out');
+                }, 500); // Tiempo igual al de la animación
+            });
+        });
+    </script>
+</body>
+</html>

